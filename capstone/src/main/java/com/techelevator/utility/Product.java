@@ -1,22 +1,25 @@
 package com.techelevator.utility;
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class Product implements Inventory{
     //list of items will go
     //message for each item group
     private String productCode;
     private String productName;
-    private BigDecimal productPrice;
+    private String productPrice;
     private String productCategory;
-    private String productMessage;
+    private int productCount;
+//    private String productMessage;    //Christy: removed the variable and created a displayMessage method below.
 
-    public Product(String productCode, String productName, BigDecimal productPrice, String productCategory, String productMessage) {
+
+    public Product(String productCode, String productName, String productPrice, String productCategory) {
         this.productCode = productCode;
         this.productName = productName;
         this.productPrice = productPrice;
         this.productCategory = productCategory;
-        this.productMessage = productMessage;
+        this.productCount = 5;
     }
 
     public String getProductCode() {
@@ -35,11 +38,11 @@ public class Product implements Inventory{
         this.productName = productName;
     }
 
-    public BigDecimal getProductPrice() {
+    public String getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(BigDecimal productPrice) {
+    public void setProductPrice(String productPrice) {
         this.productPrice = productPrice;
     }
 
@@ -51,11 +54,33 @@ public class Product implements Inventory{
         this.productCategory = productCategory;
     }
 
-    public String getProductMessage() {
-        return productMessage;
+
+    public void displayMessage(){       //To display message after purchase
+
     }
 
-    public void setProductMessage(String productMessage) {
-        this.productMessage = productMessage;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return productCode.equals(product.productCode) && productName.equals(product.productName) && productPrice.equals(product.productPrice) && productCategory.equals(product.productCategory);
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(productCode, productName, productPrice, productCategory);
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "productCode='" + productCode + '\'' +
+                ", productName='" + productName + '\'' +
+                ", productPrice=" + productPrice +
+                ", productCategory='" + productCategory + '\'' +
+                '}';
+    }
+
+
 }

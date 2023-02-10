@@ -1,8 +1,12 @@
 package com.techelevator.utility;
 
+import java.math.BigDecimal;
+
 public interface Inventory {
-    //this holds the count of items
-    //this updates the logs of whats been bought
+    String getProductName();
+    String getProductCode();
+    String getProductPrice();
+    String getProductCategory();
 
 
 }

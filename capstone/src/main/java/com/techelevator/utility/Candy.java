@@ -4,7 +4,16 @@ import java.math.BigDecimal;
 
 public class Candy extends Product{
 
-    public Candy(String productCode, String productName, BigDecimal productPrice, String productCategory, String productMessage) {
-        super(productCode, productName, productPrice, productCategory, productMessage);
+    public Candy(String productCode, String productName, String  productPrice, String productCategory) {
+        super(productCode, productName, productPrice, "Candy");
+
+
+    }
+
+
+
+    @Override   // Override method to display message after purchase
+    public void displayMessage() {
+        System.out.println("Munch Munch, Yum!");
     }
 }
