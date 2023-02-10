@@ -21,7 +21,7 @@ public class VendingMachineFile {
     public List<String> readVendingMachineFile() {
         List<String> products = new ArrayList<>();
 
-        File readVendingMachineFile = new File("C:\\Users\\Student\\workspace\\capstone-projects\\module-1\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
+        File readVendingMachineFile = new File("vendingmachine.csv");
 
         File listOfProducts = new File(String.valueOf(readVendingMachineFile));
 
