@@ -38,18 +38,18 @@ public class VendingMachineFile {
     public void writeToLogFile(String description) {      //TODO: Add fields to pass for logging in file
 
         SimpleDateFormat fileFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat logFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
+        SimpleDateFormat logDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
         Date date = new Date();
 
         String vendingMachineLog = "log" + fileFormat.format(date) + ".txt";
 
         File file = new File("C:\\Users\\Student\\workspace\\capstone-projects\\module-1\\mod-1-capstone-java-team-0\\capstone", vendingMachineLog);
 
-        if(file.exists()) {
-            System.out.println(file + " already exists. Appening to the file...");
-        }
-            try(PrintWriter writer = new PrintWriter(new FileOutputStream(file))) {
-                writer.println(logFormat);    //TODO: add fields to log in file
+//        if(file.exists()) {
+//            System.out.println(file + " already exists. Appening to the file...");
+//        }
+            try(PrintWriter writer = new PrintWriter(new FileOutputStream(file, true))) {
+                writer.println(logDate.format(date) + " " + description);    //TODO: add fields to log in file
             } catch (FileNotFoundException e) {
                 System.out.println(file.getAbsoluteFile() + " does not exist.");
         }
