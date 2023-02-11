@@ -41,11 +41,11 @@ public class VendingMachineCLI {
         while (runMenu) {
             try {
 
-            System.out.println("*****************************************************************************");
-            System.out.print("Please make a selection: ");
+            System.out.println("********************************");
+            System.out.print("\nPlease make a selection: ");
             String selection = userInput.nextLine();
             int option = Integer.parseInt(selection);
-            System.out.println("*****************************************************************************");
+            System.out.println("********************************");
 
             if (option == 1) {
                 vendingMachine.displayVendingMachineItems();
@@ -56,7 +56,7 @@ public class VendingMachineCLI {
 
                 while (runSubMenu) {
                 try{
-                    System.out.print("Please make a selection: ");
+                    System.out.print("\nPlease make a selection: ");
                     String subSelection = userInput.nextLine();
                     int subOption = Integer.parseInt(subSelection);
 
@@ -72,18 +72,14 @@ public class VendingMachineCLI {
                     } else if (subOption == 2) {
                         //display items to buy
                         vendingMachine.displayProductsForPurchase();
-                        System.out.println("*****************************************************************************\n");
-                        System.out.print("Enter the product code you wish to purchase: ");
-
                         boolean runPurchase = true;
                             while (runPurchase) {
                                 try {
-//                                    System.out.println("*****************************************************************************\n");
-//                                    System.out.print("Enter the product code you wish to purchase: ");
+                                    System.out.print("Enter the product code you wish to purchase: ");
                                     String productEntry = userInput.nextLine();
-
                                     vendingMachine.selectOptionFromPurchaseMenu(productEntry);  //TODO: Add logic to purchase
-                                } catch (Exception e) {
+                                }
+                                catch (Exception e) {
                                     System.out.println("Not a valid product code. Please try again");
                                     continue;
                             }
@@ -102,7 +98,6 @@ public class VendingMachineCLI {
                 }
 
             } else if (option == 3) {
-                
                 System.out.println("Thank you for visiting our Vending Machine.");
                 runMenu = false;
             } else {
