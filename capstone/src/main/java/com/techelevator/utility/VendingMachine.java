@@ -14,17 +14,16 @@ public interface VendingMachine {
     void exitFromMainMenu();
 
     void feedMoney(BigDecimal enteredAmount);
-    //void logEnteredMoney();
-    //void updateBalance();
+    void logEnteredMoney();
+    void updateBalance();
 
     void displayProductsForPurchase();
     void selectProductCode();
     void purchaseProduct();
     void logPurchase();
-    void displayMessageAfterItemPurchase(String productCode);
 
     void finishPurchaseTransaction();
-    BigDecimal dispenseChange(BigDecimal totalCost);
+    void dispenseChange();
     void logChange();
 
 }
