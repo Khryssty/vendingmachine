@@ -1,20 +1,17 @@
 package com.techelevator.utility;
 
 import java.math.BigDecimal;
+import java.util.List;
 import java.util.Objects;
 
-public class Product implements Inventory{
-    //list of items will go
-    //message for each item group
+public class Product {
     private String productCode;
     private String productName;
-    private String productPrice;
+    private BigDecimal productPrice;
     private String productCategory;
     private int productCount;
-//    private String productMessage;    //Christy: removed the variable and created a displayMessage method below.
 
-
-    public Product(String productCode, String productName, String productPrice, String productCategory) {
+    public Product(String productCode, String productName, BigDecimal productPrice, String productCategory) {
         this.productCode = productCode;
         this.productName = productName;
         this.productPrice = productPrice;
@@ -38,11 +35,11 @@ public class Product implements Inventory{
         this.productName = productName;
     }
 
-    public String getProductPrice() {
+    public BigDecimal getProductPrice() {
         return productPrice;
     }
 
-    public void setProductPrice(String productPrice) {
+    public void setProductPrice(BigDecimal productPrice) {
         this.productPrice = productPrice;
     }
 
@@ -54,9 +51,12 @@ public class Product implements Inventory{
         this.productCategory = productCategory;
     }
 
+    public int getProductCount() {
+        return productCount;
+    }
 
-    public void displayMessage(){       //To display message after purchase
-
+    public void setProductCount(int productCount) {
+        this.productCount = productCount;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class Product implements Inventory{
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
-        return productCode.equals(product.productCode) && productName.equals(product.productName) && productPrice.equals(product.productPrice) && productCategory.equals(product.productCategory);
+        return productCount == product.productCount && productCode.equals(product.productCode) && productName.equals(product.productName) && productPrice.equals(product.productPrice) && productCategory.equals(product.productCategory);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(productCode, productName, productPrice, productCategory);
+        return Objects.hash(productCode, productName, productPrice, productCategory, productCount);
     }
 
     @Override
@@ -79,8 +79,12 @@ public class Product implements Inventory{
                 ", productName='" + productName + '\'' +
                 ", productPrice=" + productPrice +
                 ", productCategory='" + productCategory + '\'' +
+                ", productCount=" + productCount +
                 '}';
     }
 
-
+    public void displayMessage() {
+    }
 }
+
+
