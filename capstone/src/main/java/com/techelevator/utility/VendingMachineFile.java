@@ -17,9 +17,21 @@ public class VendingMachineFile {
     //This method reads the input file vendingmachine.csv and returns a List to be used in VendingMachineCLI displayProductsToPurchase method.
     public List<String> readVendingMachineFile() {
         List<String> products = new ArrayList<>();
+        Scanner userInput = new Scanner(System.in);
 
-        File readVendingMachineFile = new File("C:\\Users\\Student\\workspace\\capstone-projects\\module-1\\mod-1-capstone-java-team-0\\capstone\\vendingmachine.csv");
-                //vendingmachine.csv");
+
+        System.out.println("*****************************************************************************\n");
+        System.out.print("Please enter ONLY the filepath of vendingmachine.csv file: ");
+        String filePath = userInput.nextLine();
+
+        File readVendingMachineFile = new File(filePath + "\\vendingmachine.csv");
+
+
+        if (!readVendingMachineFile.exists()) {
+            System.out.println("Unable to find the file in " + filePath);
+            System.exit(0);
+        }
+
 
         File listOfProducts = new File(String.valueOf(readVendingMachineFile));
 
@@ -38,20 +50,20 @@ public class VendingMachineFile {
     public void writeToLogFile(String description) {      //TODO: Add fields to pass for logging in file
 
         SimpleDateFormat fileFormat = new SimpleDateFormat("yyyy-MM-dd");
-        SimpleDateFormat logFormat = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
+        SimpleDateFormat logDate = new SimpleDateFormat("MM/dd/yyyy HH:mm:ss a");
         Date date = new Date();
 
         String vendingMachineLog = "log" + fileFormat.format(date) + ".txt";
 
         File file = new File("C:\\Users\\Student\\workspace\\capstone-projects\\module-1\\mod-1-capstone-java-team-0\\capstone", vendingMachineLog);
 
-        if(file.exists()) {
-            System.out.println(file + " already exists. Appening to the file...");
-        }
-            try(PrintWriter writer = new PrintWriter(new FileOutputStream(file))) {
-                writer.println(logFormat);    //TODO: add fields to log in file
-            } catch (FileNotFoundException e) {
-                System.out.println(file.getAbsoluteFile() + " does not exist.");
+//        if(file.exists()) {
+//            System.out.println(file + " already exists. Appening to the file...");
+//        }
+        try(PrintWriter writer = new PrintWriter(new FileOutputStream(file, true))) {
+            writer.println(logDate.format(date) + " " + description);    //TODO: add fields to log in file
+        } catch (FileNotFoundException e) {
+            System.out.println(file.getAbsoluteFile() + " does not exist.");
         }
 
     }

@@ -2,8 +2,7 @@ package com.techelevator.utility;
 
 import java.io.FileNotFoundException;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class VendingMachineScreen<products> implements VendingMachine{
 
@@ -30,8 +29,10 @@ public class VendingMachineScreen<products> implements VendingMachine{
     private String productName;
     private BigDecimal productPrice;
     private String productCategory;
-
-
+    private BigDecimal change;
+    private BigDecimal totalCost = new BigDecimal(0);
+    private Map<String, List<Product>> purchaseMap = new HashMap<>();
+    private Scanner userInput = new Scanner(System.in);
 
     @Override
     public void displayMainMenu() {
@@ -53,13 +54,13 @@ public class VendingMachineScreen<products> implements VendingMachine{
             productList.add(product);
         }
 
-            displayMenu(currentMenu);
+        displayMenu(currentMenu);
     }
 
     @Override
     public void selectOptionFromMainMenu(int selection) {       // TODO: should this be deleted
 
-}
+    }
 
     @Override
     public void displayVendingMachineItems() {
@@ -68,33 +69,63 @@ public class VendingMachineScreen<products> implements VendingMachine{
         System.out.println("");
         System.out.print("\tGROUP\t\tNAME\t\t\t\tPRODUCT CODE\t\tPRICE\t\tQUANTITY\n");
 
-         for(Product i : productList) {
+        for(Product i : productList) {
             System.out.printf("\t%-7s\t\t" , i.getProductCategory());
             System.out.printf("%-20s\t", i.getProductName());
             System.out.printf("%-10s\t\t", i.getProductCode());
             System.out.printf("%-4s\t\t\t", i.getProductPrice());
             System.out.printf(i.getProductCount() + "\n");
-         }
+        }
 
     }
 
     @Override
     public void displayPurchaseMenu() {
-
+//        System.out.println("Please make a selection: ");
+//        String selection = userInput.nextLine();
         System.out.println("Current money: " + account.getAccountBalance());
         displayMenu(purchaseMenu);
 
-        }
-
-
-
+    }
 
     @Override
     public void selectOptionFromPurchaseMenu(String productCode) {
-//        System.out.print("Please enter product code you wish to buy: ");
-//        String productCode = userin
 
+        boolean dispensed = false;
+        boolean invalidProduct = false;
+        for(Product item : productList) {
+            if(account.getAccountBalance().compareTo(item.getProductPrice()) == 1) {
+                if (item.getProductCode().equalsIgnoreCase(productCode)) {
+                    account.calculateChange(item.getProductPrice());
+                    System.out.println("Dispensing " + item.getProductName() + " costs $" + item.getProductPrice() + " and your balance is $" + account.getAccountBalance());
+                    displayMessageAfterItemPurchase(item.getProductCode());
+                    //      System.out.println(account.getChangeMethod(item.getProductPrice()));
+                    //BigDecimal changeToReturn = calculateChange(item.getProductPrice());
+                    file.writeToLogFile(item.getProductName() + " " + item.getProductCode() + " $" + item.getProductPrice() + " $" + account.getAccountBalance());
+                    dispensed = true;
+
+
+                    // totalCost.add(item.getProductPrice());
+                    updateProductCount(item.getProductCode());
+
+                } else {
+                    invalidProduct = true;
+                }
+            }  }
+        if (!dispensed){
+            if(invalidProduct) {
+                System.out.println("Invalid product entry. Please try again.");
+                displayPurchaseMenu();
+            } else {
+                System.out.println("Account balance is not enough for purchase. Please add money.");
+                displayPurchaseMenu();
+            }
+        } else {
+            displayPurchaseMenu();
+        }
     }
+
+
 
     @Override
     public void exitFromMainMenu() {
@@ -103,27 +134,13 @@ public class VendingMachineScreen<products> implements VendingMachine{
 
     @Override
     public void feedMoney(BigDecimal enteredAmount) {           //TODO: Logic to add money and display the balance
-        //BigDecimal currentBalance = account.getAccountBalance();
+
         account.addBalance(enteredAmount);
-        file.writeToLogFile("FEED MONEY" + enteredAmount + account.getAccountBalance());
-        //"FEED MONEY " + enteredAmount + account.getAccountBalance()
+        file.writeToLogFile("FEED MONEY: " + " $" + enteredAmount + "  $" + account.getAccountBalance());
 
         displayPurchaseMenu();
-
-
-
     }
 
-    @Override
-    public void logEnteredMoney() {
-
-
-    }
-
-    @Override
-    public void updateBalance() {
-
-    }
 
     @Override
     public void displayProductsForPurchase() {
@@ -156,12 +173,18 @@ public class VendingMachineScreen<products> implements VendingMachine{
 
     @Override
     public void finishPurchaseTransaction() {
-
+        //dispenseChange(totalCost);
+        account.getChangeMethod(totalCost);
+        account.setAccountBalance(new BigDecimal(0));
+        displayMenu(currentMenu);
     }
 
     @Override
-    public void dispenseChange() {
+    public BigDecimal dispenseChange(BigDecimal totalCost) {
 
+        account.getChangeMethod(totalCost);
+
+        return change;
     }
 
     @Override
@@ -170,17 +193,42 @@ public class VendingMachineScreen<products> implements VendingMachine{
     }
 
 
+    @Override
+    public void displayMessageAfterItemPurchase(String productCode) {
+
+        for (Product item : productList) {
+            if (item.getProductCode().equalsIgnoreCase(productCode) && item.getProductCategory().equalsIgnoreCase("Chip")){
+                System.out.println("Crunch Crunch, Yum!");
+            } else if (item.getProductCode().equalsIgnoreCase(productCode) && item.getProductCategory().equalsIgnoreCase("Candy")){
+                System.out.println("Munch Munch, Yum!");
+            } else if (item.getProductCode().equalsIgnoreCase(productCode) && item.getProductCategory().equalsIgnoreCase("Drink")) {
+                System.out.println("Glug Glug, Yum!");
+            } else if (item.getProductCode().equalsIgnoreCase(productCode) && item.getProductCategory().equalsIgnoreCase("Gum")){
+                System.out.println("Chew Chew, Yum!");
+            }
+        }
+    }
+
     private void displayMenu(String[] menu) {
 
-        System.out.println("\n********************************");
+        System.out.println("*****************************************************************************\n");
         for (int i = 0; i < menu.length; i++) {
             if (!menu[i].startsWith("*")) {
                 System.out.printf("%1$s) %2$s\n", i + 1, menu[i]);
             }
         }
-        System.out.println("********************************");
+        System.out.println("*****************************************************************************\n");
     }
 
+    @Override
+    public void updateProductCount(String productCode) {
+        for(Product item : productList) {
+            if(item.getProductCode().equalsIgnoreCase(productCode)) {
+                int newCount = item.getProductCount() - 1;
+                item.setProductCount(newCount);
+            }
+        }
+    }
 }
 
 

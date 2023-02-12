@@ -9,21 +9,26 @@ public interface VendingMachine {
     void displayVendingMachineItems();
 
     void displayPurchaseMenu();
+    //void processPurchaseProduct();
     void selectOptionFromPurchaseMenu(String productCode);
 
     void exitFromMainMenu();
 
     void feedMoney(BigDecimal enteredAmount);
-    void logEnteredMoney();
-    void updateBalance();
+    //void logEnteredMoney();
+    //void updateBalance();
 
     void displayProductsForPurchase();
     void selectProductCode();
     void purchaseProduct();
     void logPurchase();
+    void displayMessageAfterItemPurchase(String productCode);
 
     void finishPurchaseTransaction();
-    void dispenseChange();
+    BigDecimal dispenseChange(BigDecimal totalCost);
     void logChange();
+    void updateProductCount(String productCode);
+
+
 
 }

@@ -35,75 +35,81 @@ public class VendingMachineCLI {
 
         boolean runMenu = true;
 
+//        System.out.print("Please enter the filepath to read the file from: ");
+//        String filePath = userInput.nextLine();
+
+
         vendingMachine.displayMainMenu();
 
 
         while (runMenu) {
             try {
 
-            System.out.println("********************************");
-            System.out.print("\nPlease make a selection: ");
-            String selection = userInput.nextLine();
-            int option = Integer.parseInt(selection);
-            System.out.println("********************************");
+                //System.out.println("*****************************************************************************");
+                System.out.print("Please make a selection: ");
+                String selection = userInput.nextLine();
+                int option = Integer.parseInt(selection);
+                System.out.println("*****************************************************************************");
 
-            if (option == 1) {
-                vendingMachine.displayVendingMachineItems();
-                vendingMachine.displayMainMenu();
-            } else if(option == 2) {
-                vendingMachine.displayPurchaseMenu();
-                boolean runSubMenu = true;
+                if (option == 1) {
+                    vendingMachine.displayVendingMachineItems();
+                    //vendingMachine.displayMainMenu();
+                } else if(option == 2) {
+                    vendingMachine.displayPurchaseMenu();
+                    boolean runSubMenu = true;
 
-                while (runSubMenu) {
-                try{
-                    System.out.print("\nPlease make a selection: ");
-                    String subSelection = userInput.nextLine();
-                    int subOption = Integer.parseInt(subSelection);
+                    while (runSubMenu) {
+                        try{
+                            System.out.print("Please make a selection: ");
+                            String subSelection = userInput.nextLine();
+                            int subOption = Integer.parseInt(subSelection);
 
-                    if (subOption == 1) {       //TODO: Code for feed money logic
-                        System.out.print("Please enter amount: ");
-                        String enteredAmountFromScreen = userInput.nextLine();
-                        BigDecimal enteredAmount = new BigDecimal(enteredAmountFromScreen);
-                        vendingMachine.feedMoney(enteredAmount);
+                            if (subOption == 1) {       //TODO: Code for feed money logic
+                                System.out.print("Please enter amount: ");
+                                String enteredAmountFromScreen = userInput.nextLine();
+                                BigDecimal enteredAmount = new BigDecimal(enteredAmountFromScreen);
+                                vendingMachine.feedMoney(enteredAmount);
 
-                        System.out.println();
+                            } else if (subOption == 2) {
+                                //display items to buy
+                                vendingMachine.displayProductsForPurchase();
+                                System.out.println("*****************************************************************************\n");
+                                System.out.print("Enter the product code you wish to purchase: ");
 
-
-                    } else if (subOption == 2) {
-                        //display items to buy
-                        vendingMachine.displayProductsForPurchase();
-                        boolean runPurchase = true;
-                            while (runPurchase) {
-                                try {
-                                    System.out.print("Enter the product code you wish to purchase: ");
-                                    String productEntry = userInput.nextLine();
-                                    vendingMachine.selectOptionFromPurchaseMenu(productEntry);  //TODO: Add logic to purchase
+                                boolean runPurchase = true;
+                                while (runPurchase) {
+                                    try {
+                                        String productEntry = userInput.nextLine();
+                                        vendingMachine.selectOptionFromPurchaseMenu(productEntry);
+                                        runPurchase= false;
+                                    } catch (Exception e) {
+                                        System.out.println("Not a valid product code. Please try again");
+                                        continue;
+                                    }
                                 }
-                                catch (Exception e) {
-                                    System.out.println("Not a valid product code. Please try again");
-                                    continue;
-                            }
-                        }
 
-                    } else if (subOption == 3) {
-                        //return change && go back to main menu
-                    } else {
-                        System.out.println("Not a valid selection. Please try again");
-                        continue;
+                            } else if (subOption == 3) {
+                                vendingMachine.finishPurchaseTransaction();
+                                runSubMenu = false;
+
+                            } else {
+                                System.out.println("Not a valid selection. Please try again");
+                                continue;
+                            }
+                        } catch (Exception e) {
+                            System.out.println("Not a valid selection. Please try again");
+                            continue;
+                        }
                     }
-                } catch (Exception e) {
+
+                } else if (option == 3) {
+
+                    System.out.println("Thank you for visiting our Vending Machine.");
+                    runMenu = false;
+                } else {
                     System.out.println("Not a valid selection. Please try again");
                     continue;
-                }
-                }
-
-            } else if (option == 3) {
-                System.out.println("Thank you for visiting our Vending Machine.");
-                runMenu = false;
-            } else {
-                System.out.println("Not a valid selection. Please try again");
-                continue;
-            } }
+                } }
             catch (NumberFormatException e) {
                 System.out.println("Not a valid selection. Please try again");
                 continue;
