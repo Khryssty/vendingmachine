@@ -55,11 +55,14 @@ public class VendingMachineFile {
 
         String vendingMachineLog = "log" + fileFormat.format(date) + ".txt";
 
-        File file = new File("C:\\Users\\Student\\workspace\\capstone-projects\\module-1\\mod-1-capstone-java-team-0\\capstone", vendingMachineLog);
+        File file = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\", vendingMachineLog);
 
-//        if(file.exists()) {
-//            System.out.println(file + " already exists. Appening to the file...");
-//        }
+        if(!file.exists()) {
+            if(!file.mkdirs()) {
+                //TODO: Create a code to handle
+            }
+        }
+
         try(PrintWriter writer = new PrintWriter(new FileOutputStream(file, true))) {
             writer.println(logDate.format(date) + " " + description);    //TODO: add fields to log in file
         } catch (FileNotFoundException e) {

@@ -176,7 +176,9 @@ public class VendingMachineScreen<products> implements VendingMachine{
         //dispenseChange(totalCost);
         account.getChangeMethod(totalCost);
         account.setAccountBalance(new BigDecimal(0));
+        file.writeToLogFile("GIVE CHANGE");
         displayMenu(currentMenu);
+
     }
 
     @Override
@@ -188,7 +190,7 @@ public class VendingMachineScreen<products> implements VendingMachine{
     }
 
     @Override
-    public void logChange() {
+    public void logChange() {       //TODO: Log the change
 
     }
 

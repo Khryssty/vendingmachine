@@ -13,6 +13,7 @@ import java.util.Scanner;
 public class VendingMachineCLI {
 
     private Scanner userInput;
+    private String filePath;
 
     public VendingMachineCLI() {
         userInput = new Scanner(System.in);
