@@ -174,9 +174,9 @@ public class VendingMachineScreen<products> implements VendingMachine{
     @Override
     public void finishPurchaseTransaction() {
         //dispenseChange(totalCost);
-        account.getChangeMethod(totalCost);
+        BigDecimal changeToPrint = account.getChangeMethod(totalCost);
         account.setAccountBalance(new BigDecimal(0));
-        file.writeToLogFile("GIVE CHANGE");
+        file.writeToLogFile("GIVE CHANGE" + " " + changeToPrint + " " + account.getAccountBalance());        //TODO: log the actual change
         displayMenu(currentMenu);
 
     }
