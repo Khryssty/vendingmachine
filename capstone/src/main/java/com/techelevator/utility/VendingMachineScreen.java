@@ -22,9 +22,9 @@ public class VendingMachineScreen<products> implements VendingMachine{
 
     AccountBalance account = new AccountBalance();
     VendingMachineFile file = new VendingMachineFile();
-    private List<String> productsFromFile;
-    private List<Product> productList = new ArrayList<>();
-    private String[] detailedProducts = {};
+    private List<String> productsFromFile;                      //variable to hold the return value after reading the csv file
+    private List<Product> productList = new ArrayList<>();      //List to hold the products after parsing
+    private String[] detailedProducts = {};                     //
     private String productCode;
     private String productName;
     private BigDecimal productPrice;

@@ -55,12 +55,12 @@ public class VendingMachineCLI {
                 if (option == 1) {
                     vendingMachine.displayVendingMachineItems();
                     //vendingMachine.displayMainMenu();
-                } else if(option == 2) {
+                } else if (option == 2) {
                     vendingMachine.displayPurchaseMenu();
                     boolean runSubMenu = true;
 
                     while (runSubMenu) {
-                        try{
+                        try {
                             System.out.print("Please make a selection: ");
                             String subSelection = userInput.nextLine();
                             int subOption = Integer.parseInt(subSelection);
@@ -82,7 +82,7 @@ public class VendingMachineCLI {
                                     try {
                                         String productEntry = userInput.nextLine();
                                         vendingMachine.selectOptionFromPurchaseMenu(productEntry);
-                                        runPurchase= false;
+                                        runPurchase = false;
                                     } catch (Exception e) {
                                         System.out.println("Not a valid product code. Please try again");
                                         continue;
@@ -110,8 +110,8 @@ public class VendingMachineCLI {
                 } else {
                     System.out.println("Not a valid selection. Please try again");
                     continue;
-                } }
-            catch (NumberFormatException e) {
+                }
+            } catch (NumberFormatException e) {
                 System.out.println("Not a valid selection. Please try again");
                 continue;
             } catch (Exception e) {
@@ -119,10 +119,6 @@ public class VendingMachineCLI {
                 continue;
             }
         }
-
-
-
-
 
 
     }

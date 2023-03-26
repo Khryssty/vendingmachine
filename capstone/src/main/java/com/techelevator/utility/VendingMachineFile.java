@@ -55,12 +55,12 @@ public class VendingMachineFile {
 
         String vendingMachineLog = "log" + fileFormat.format(date) + ".txt";
 
-        File file = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\capstone\\", vendingMachineLog);
+        File file = new File("C:\\Users\\Student\\workspace\\mod-1-capstone-java-team-0\\log", vendingMachineLog);
 
-        if(!file.exists()) {
-            if(!file.mkdirs()) {
-                //TODO: Create a code to handle
-            }
+        if(file.exists()) {
+//            if(!file.mkdirs()) {
+//                //TODO: Create a code to handle
+//            }
         }
 
         try(PrintWriter writer = new PrintWriter(new FileOutputStream(file, true))) {
